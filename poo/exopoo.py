@@ -23,14 +23,14 @@ class Point:
 
 
     def __str__(self):
-        return f"({self.__absc},{self.__order})"
+        return f"({self.absc},{self.order})"
 
     def calculerdistance(self, p):
-        return sqrt(pow(self.__absc - p.__absc, 2) + pow(self.__order - p.__order,2))
+        return sqrt(pow(self.absc - p.__absc, 2) + pow(self.order - p.__order,2))
 
 
     def calculermilieu(self,p):
-        p = Point((self.__absc + p.__absc)/2, (self.__order + p.__order)/2)
+        p = Point((self.absc + p.__absc)/2, (self.lsorder + p.__order)/2)
         return p
 
 
@@ -75,13 +75,26 @@ class TroisPoint:
         AC = self.premier.calculerdistance(self.troisieme)
         BC = self.deuxieme.calculerdistance(self.troisieme)
 
-        if AB == AC + BC:
-            return True
-        else:
-            return False
+        return AB == AC + BC or AC == AB + BC or  BC == AC + AB
+            
+    def est_isocele(self):
+        AB = self.premier.calculerdistance(self.deuxieme)
+        AC = self.premier.calculerdistance(self.troisieme)
+        BC = self.deuxieme.calculerdistance(self.troisieme)
+        
+        return AB == AC or AB == BC or BC == AC
+
+    @staticmethod
+    def calculerdistance(p):
+        return sqrt(pow(self.absc - p.__absc, 2) + pow(self.order - p.__order,2))
+
+    @staticmethod
+    def calculermilieu(p):
+        p = Point((absc + p.__absc)/2, (slsorder + p.__order)/2)
+        return p
+        
 
 
+t = TroisPoint(Point(8, 5), Point(8, 8), Point(8, 0))
 
-t = TroisPoint(Point(4, 5), Point(5, 7), Point(6, 0))
-
-print(t.sont_alignes())
+print(t.calculerdistance)
