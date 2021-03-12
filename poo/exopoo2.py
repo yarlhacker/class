@@ -33,7 +33,7 @@ class Adresse:
 
 class Personne:
     
-    def __init__(self,nom,sexe,adresses):
+    def __init__(self,nom,sexe,adresses = []):
         self.nom = nom
         self.sexe = sexe
         self.adresses = adresses
@@ -61,34 +61,84 @@ class Personne:
     @adresses.setter
     def adresses(self,b):
         self.__adresses = b
+    
+    def __getitem__(self,index):
+        return self.adresses[index]
+    
+    def __setitem__(self,index,value):
+        self.adresses[index]=value
 
+    def __delitem__(self,index):
+        del self.adresses[index]
+
+    def __str__(self):
+        return f'{self.nom} {self.sexe}'
 
 
 class ListePersonnes:
-    def __init__(self,personne):
-        self.personne = personne
+    def __init__(self,personnes = []):
+        self.personnes = personnes
 
     @property
-    def personne(self):
-        return self.__personne
+    def personnes(self):
+        return self.__personnes
     
-    @personne.setter
-    def personne(self,a):
-        self.__personne = a
-    
-    def __str__(self):
-        return self.personne
+    @personnes.setter
+    def personnes(self,a):
+        self.__personnes = a
+
 
     def find_by_nom(self,s:str):
-        if self.personne[0] == s:
-            return self.personne[0]
-        else:
-            print('null')
+        for personne in self.personnes:
+            if personne.nom == s:
+                return personne 
+    def exists_code_postale(self,cp):
+        for personne in self.personnes:
+            for adresse in personne.adresses:
+                if adresse.code_postale == cp:
+                    return True
+        return False 
+    
+    def count_personne_ville(self,ville):
+        nombre_personne = 0
+        for personne in self.personnes:
+            for adresse in personne.adresses:
+                if adresse.ville == ville:
+                    nombre_personne+=1
+                    break
+            continue
+    
+    def edit_personne_ville(self,oldnom,newville):
+        for personne in self.personnes:
+            if personne.nom == oldnom:
+                personne.nom = newville #personne.nom.replace(oldnom,newville)
+    
+    def edit_personne_ville(self,nom,newville):
+        for personne in self.personnes:
+            for adresse in personne.adresses:
+                if nom == adresse.ville:
+                    adresse.ville = newville 
+    def __getitem__(self,index):
+        return self.personnes[index]
+    
+    def __setitem__(self,index,value):
+        self.personnes[index]=value
+
+    def __delitem__(self,index):
+        del self.personnes[index]
+        
+
+    def __str__(self):
+        return str(self.personnes)
+        
+    
+
+p1 = Personne('ismael','M')
+p2 = Personne('aziz','F')
+lp1 = ListePersonnes([p1,p2])
+
+print(lp1[0])
+lp1[0] = p2
+del lp1[0]
 
 
-
-
-
-p1 =Personne('ismael','M',545416)
-
-print(p1.sexe)
