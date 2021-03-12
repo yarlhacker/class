@@ -132,13 +132,15 @@ class ListePersonnes:
         return str(self.personnes)
         
     
-
-p1 = Personne('ismael','M')
-p2 = Personne('aziz','F')
+A1 = Adresse('willi','Abidjan',1234)
+A2 = [Adresse('angre','Abidjan',35678), A1]
+p1 = Personne('ismael','M',[A1])
+p2 = Personne('aziz','F',A2)
 lp1 = ListePersonnes([p1,p2])
 
+print(lp1[1][1])
+
 print(lp1[0])
-lp1[0] = p2
-del lp1[0]
+
 
 
